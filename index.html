@@ -57,8 +57,71 @@
     min-height:136mm;
   }
   .sheet.a4l .frame{
+    padding:4mm 12mm;
     min-height:192mm;
   }
+
+  /* COMPACT MODE for landscape kuitansi (A5/A4) - shorter page height */
+  .sheet.a5 .logo-row, .sheet.a4l .logo-row{ margin-bottom:3px; }
+  .sheet.a5 .logo-row img, .sheet.a4l .logo-row img{ width:40px; height:40px; }
+  .sheet.a5 .logo-divider, .sheet.a4l .logo-divider{ height:32px; }
+  .sheet.a5 .eyebrow, .sheet.a4l .eyebrow{ margin-bottom:2px; }
+  .sheet.a5 .school-addr, .sheet.a4l .school-addr{ margin-top:2px; line-height:1.3; }
+  .sheet.a5 .rule, .sheet.a4l .rule{ margin:6px auto; }
+  .sheet.a5 .doc-title, .sheet.a4l .doc-title{ margin-top:0; }
+  .sheet.a5 .meta-row, .sheet.a4l .meta-row{ margin-top:5px; padding-bottom:4px; }
+  .sheet.a5 .info-grid, .sheet.a4l .info-grid{ margin-top:6px; }
+  .sheet.a5 .kuitansi-lines, .sheet.a4l .kuitansi-lines{ margin-top:4px; padding-top:4px; }
+  .sheet.a5 .kuitansi-untuk, .sheet.a4l .kuitansi-untuk{ margin-bottom:5px; }
+  .sheet.a5 .kuitansi-items-table thead th, .sheet.a4l .kuitansi-items-table thead th{ padding:5px 10px; }
+  .sheet.a5 .kuitansi-items-table tbody td, .sheet.a4l .kuitansi-items-table tbody td{ padding:3px 10px; }
+  .sheet.a5 .kuitansi-items-table tfoot td, .sheet.a4l .kuitansi-items-table tfoot td{ padding:5px 10px; }
+  .sheet.a5 .terbilang, .sheet.a4l .terbilang{ margin-top:5px; padding-top:4px; }
+  .sheet.a5 .extra-wrap, .sheet.a4l .extra-wrap{ margin-top:8px; }
+  .sheet.a5 .extra-title, .sheet.a4l .extra-title{ margin-bottom:4px; padding-bottom:3px; }
+  .sheet.a5 .rekening-box .bank-row, .sheet.a4l .rekening-box .bank-row{ padding:1px 0; }
+  .sheet.a5 .catatan, .sheet.a4l .catatan{ margin-top:5px; padding-top:4px; }
+  .sheet.a5 .footer, .sheet.a4l .footer{ margin-top:12px; }
+  .sheet.a5 .seal-wrap, .sheet.a4l .seal-wrap{ height:44px; }
+  .sheet.a5 .seal-logo, .sheet.a4l .seal-logo{ width:40px; height:40px; bottom:0; }
+  .sheet.a5 .footnote, .sheet.a4l .footnote{ margin-top:8px; }
+
+  /* A5 needs much more aggressive shrink (148mm height only) */
+  .sheet.a5 .frame{ font-size:11px; }
+  .sheet.a5 .logo-row img{ width:26px; height:26px; }
+  .sheet.a5 .logo-divider{ height:20px; }
+  .sheet.a5 .logo-row{ margin-bottom:1px; }
+  .sheet.a5 .eyebrow{ font-size:7.5px; margin-bottom:1px; }
+  .sheet.a5 .school-name{ font-size:14px; }
+  .sheet.a5 .school-addr{ font-size:8px; margin-top:1px; line-height:1.15; }
+  .sheet.a5 .rule{ margin:3px auto; width:50px; }
+  .sheet.a5 .doc-title{ font-size:12px; letter-spacing:2px; }
+  .sheet.a5 .meta-row{ font-size:9px; margin-top:3px; padding-bottom:2px; }
+  .sheet.a5 .info-grid{ margin-top:3px; }
+  .sheet.a5 .info-col p{ font-size:7px; margin-bottom:1px; }
+  .sheet.a5 .info-col h3{ font-size:11px; }
+  .sheet.a5 .kuitansi-lines{ margin-top:2px; padding-top:2px; }
+  .sheet.a5 .kuitansi-untuk{ font-size:10.5px; margin-bottom:2px; }
+  .sheet.a5 .kuitansi-items-table{ font-size:10.5px; }
+  .sheet.a5 .kuitansi-items-table thead th{ padding:3px 8px; font-size:8px; }
+  .sheet.a5 .kuitansi-items-table tbody td{ padding:1.5px 8px; }
+  .sheet.a5 .kuitansi-items-table tfoot td{ padding:3px 8px; }
+  .sheet.a5 .terbilang{ font-size:12px; margin-top:2px; padding-top:2px; }
+  .sheet.a5 .extra-wrap{ margin-top:3px; }
+  .sheet.a5 .extra-title{ font-size:8px; margin-bottom:2px; padding-bottom:1px; }
+  .sheet.a5 .rekening-box{ font-size:8px; line-height:1.4; }
+  .sheet.a5 .rekening-box .bank-row b{ font-size:8.5px; }
+  .sheet.a5 .catatan{ font-size:7px; margin-top:2px; padding-top:2px; }
+  .sheet.a5 .footer{ margin-top:4px; }
+  .sheet.a5 .verify-text{ font-size:7px; max-width:120px; }
+  .sheet.a5 .qr{ width:38px; height:38px; }
+  .sheet.a5 .seal-wrap{ height:34px; }
+  .sheet.a5 .seal-logo{ width:32px; height:32px; }
+  .sheet.a5 .sign-block{ width:140px; }
+  .sheet.a5 .sign-date{ font-size:8px; }
+  .sheet.a5 .sign-name{ font-size:9px; padding-top:2px; }
+  .sheet.a5 .sign-role{ font-size:7px; }
+  .sheet.a5 .footnote{ font-size:6.5px; margin-top:3px; }
   .frame::before{
     content:"";
     position:absolute;
