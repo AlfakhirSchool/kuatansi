@@ -31,7 +31,8 @@
   }
   .sheet{
     width:210mm;
-    min-height:297mm;
+    height:297mm;
+    overflow:hidden;
     margin:0 auto;
     background:var(--paper);
     position:relative;
@@ -39,12 +40,12 @@
   }
   .sheet.a5{
     width:210mm;
-    min-height:148mm;
-    padding:6mm;
+    height:148mm;
+    padding:4mm;
   }
   .sheet.a4l{
     width:297mm;
-    min-height:210mm;
+    height:210mm;
   }
   .frame{
     position:relative;
@@ -53,8 +54,8 @@
     min-height:279mm;
   }
   .sheet.a5 .frame{
-    padding:6mm 10mm;
-    min-height:136mm;
+    padding:4mm 8mm;
+    min-height:140mm;
   }
   .sheet.a4l .frame{
     padding:4mm 12mm;
@@ -79,7 +80,7 @@
   .sheet.a5 .terbilang, .sheet.a4l .terbilang{ margin-top:5px; padding-top:4px; }
   .sheet.a5 .extra-wrap, .sheet.a4l .extra-wrap{ margin-top:8px; }
   .sheet.a5 .extra-title, .sheet.a4l .extra-title{ margin-bottom:4px; padding-bottom:3px; }
-  .sheet.a5 .rekening-box .bank-row, .sheet.a4l .rekening-box .bank-row{ padding:1px 0; }
+  .sheet.a5 .rekening-box .bank-row, .sheet.a4l .rekening-box .bank-row{ padding:1px 6px; margin:0 -6px; }
   .sheet.a5 .catatan, .sheet.a4l .catatan{ margin-top:5px; padding-top:4px; }
   .sheet.a5 .footer, .sheet.a4l .footer{ margin-top:12px; }
   .sheet.a5 .seal-wrap, .sheet.a4l .seal-wrap{ height:44px; }
@@ -119,8 +120,8 @@
   .sheet.a5 .extra-title{ font-size:8px; margin-bottom:2px; padding-bottom:1px; }
   .sheet.a5 .rekening-box{ font-size:8px; line-height:1.4; }
   .sheet.a5 .rekening-box .bank-row b{ font-size:8.5px; }
-  .sheet.a5 .catatan{ font-size:7px; margin-top:2px; padding-top:2px; }
-  .sheet.a5 .footer{ margin-top:4px; }
+  .sheet.a5 .catatan{ font-size:7px; margin-top:1px; padding-top:1px; }
+  .sheet.a5 .footer{ margin-top:2px; }
   .sheet.a5 .verify-text{ font-size:7px; max-width:120px; }
   .sheet.a5 .qr{ width:38px; height:38px; }
   .sheet.a5 .seal-wrap{ height:34px; }
@@ -129,7 +130,7 @@
   .sheet.a5 .sign-date{ font-size:8px; }
   .sheet.a5 .sign-name{ font-size:9px; padding-top:2px; }
   .sheet.a5 .sign-role{ font-size:7px; }
-  .sheet.a5 .footnote{ font-size:6.5px; margin-top:3px; }
+  .sheet.a5 .footnote{ font-size:6.5px; margin-top:1px; }
   .frame::before{
     content:"";
     position:absolute;
@@ -272,6 +273,7 @@
   .kuitansi-untuk .label{font-style:italic;color:var(--muted);}
   .kuitansi-untuk .val{font-weight:700;}
   .kuitansi-items-table{border-collapse:collapse;width:100%;font-family:Georgia,serif;font-size:12px;color:var(--ink);}
+  .kuitansi-items-table tr, .rekening-box .bank-row, .extra-wrap, .sign-block, .kuitansi-lines{ break-inside:avoid; page-break-inside:avoid; }
   .kuitansi-items-table thead th{
     font-family:Arial,sans-serif;background:var(--teal);color:#fdfcf9;
     text-align:left;font-size:9.5px;letter-spacing:1px;text-transform:uppercase;
@@ -470,9 +472,9 @@
     color:var(--muted);
     line-height:1.9;
   }
-  .rekening-box .bank-row{display:flex;justify-content:space-between;padding:2px 0;}
+  .rekening-box .bank-row{display:flex;justify-content:space-between;padding:2px 6px;margin:0 -6px;}
   .rekening-box .bank-row b{color:var(--ink);font-family:'Courier New',monospace;font-size:10px;}
-  .rekening-box .bank-row.active{background:var(--gold-tint);border-radius:3px;padding:2px 6px;margin:0 -6px;}
+  .rekening-box .bank-row.active{background:var(--gold-tint);border-radius:3px;}
   .rekening-box .bank-row.active span, .rekening-box .bank-row.active b{color:var(--teal-deep);font-weight:700;}
   .catatan{
     margin-top:10px;
@@ -520,11 +522,63 @@
   .btn-primary{background:var(--teal);color:#fff;}
   .btn-secondary{background:var(--gold-tint);color:var(--teal-deep);}
   .btn-danger{background:var(--orange-tint);color:var(--orange);}
-  @media print{.toolbar{display:none;}}
+  @media print{.toolbar{display:none;} #login-gate{display:none!important;} #riwayat-modal{display:none!important;}}
 </style>
 <style id="print-orientation">@page{size:A4 portrait;margin:0;}</style>
 </head>
 <body>
+  <div id="login-gate" style="position:fixed;inset:0;background:linear-gradient(160deg,#00595f 0%,#003d40 100%);display:flex;align-items:center;justify-content:center;z-index:9999;font-family:Arial,sans-serif;">
+    <div style="background:#fdfcf9;border-radius:10px;padding:30px 36px;width:310px;box-shadow:0 14px 50px rgba(0,0,0,.35);border-top:4px solid #e0951f;">
+      <div style="display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:8px;">
+        <img id="login-logo-sd" style="width:48px;height:48px;object-fit:contain;">
+        <div style="width:1px;height:36px;background:#ddd6c4;"></div>
+        <img id="login-logo-smp" style="width:48px;height:48px;object-fit:contain;">
+      </div>
+      <div style="text-align:center;font-size:8.5px;letter-spacing:2px;color:#e0951f;text-transform:uppercase;margin-bottom:2px;">Al Fakhir School</div>
+      <div style="text-align:center;font-size:13.5px;font-weight:700;color:#003d40;margin-bottom:20px;">Login Bukti Pembayaran</div>
+      <label style="display:block;font-size:11px;color:#6b7280;margin-bottom:4px;">Username</label>
+      <input id="login-user" style="width:100%;padding:8px;border:1px solid #ddd6c4;border-radius:4px;margin-bottom:12px;font-size:13px;">
+      <label style="display:block;font-size:11px;color:#6b7280;margin-bottom:4px;">Password</label>
+      <input id="login-pass" type="password" style="width:100%;padding:8px;border:1px solid #ddd6c4;border-radius:4px;margin-bottom:8px;font-size:13px;">
+      <div id="login-error" style="color:#d9560f;font-size:11px;margin-bottom:10px;display:none;">Username atau password salah.</div>
+      <button id="login-btn" style="width:100%;padding:9px;background:#00595f;color:#fff;border:none;border-radius:4px;font-weight:600;cursor:pointer;font-size:13px;">Masuk</button>
+    </div>
+  </div>
+  <script>
+  (function(){
+    var USER = "kuitansi.alfakhir";
+    var PASS = "kuitansi.AF";
+    var gate = document.getElementById("login-gate");
+    document.addEventListener("DOMContentLoaded", function(){
+      var sd = document.getElementById("logo-sd"), smp = document.getElementById("logo-smp");
+      if(sd) document.getElementById("login-logo-sd").src = sd.src;
+      if(smp) document.getElementById("login-logo-smp").src = smp.src;
+    });
+    if(sessionStorage.getItem("afKuitansiAuth") === "1"){ gate.style.display = "none"; }
+    function tryLogin(){
+      var u = document.getElementById("login-user").value.trim();
+      var p = document.getElementById("login-pass").value;
+      if(u === USER && p === PASS){
+        sessionStorage.setItem("afKuitansiAuth", "1");
+        gate.style.display = "none";
+      } else {
+        document.getElementById("login-error").style.display = "block";
+      }
+    }
+    document.getElementById("login-btn").addEventListener("click", tryLogin);
+    document.getElementById("login-pass").addEventListener("keydown", function(e){ if(e.key === "Enter") tryLogin(); });
+    document.addEventListener("DOMContentLoaded", function(){
+      var lo = document.getElementById("btn-logout");
+      if(lo) lo.addEventListener("click", function(){
+        sessionStorage.removeItem("afKuitansiAuth");
+        document.getElementById("login-user").value = "";
+        document.getElementById("login-pass").value = "";
+        document.getElementById("login-error").style.display = "none";
+        gate.style.display = "flex";
+      });
+    });
+  })();
+  </script>
   <div class="toolbar">
     <h2>Input Data Bukti Pembayaran</h2>
     <div class="row">
@@ -536,15 +590,19 @@
         </select>
       </div>
       <div><label>Unit Sekolah</label><select id="in-unit"><option value="SD">SD</option><option value="SMP" selected>SMP</option></select></div>
-      <div><label>Nama Siswa</label><input id="in-nama" value="Ahmad Fauzan Ramadhan"></div>
-      <div><label>Kelas</label><input id="in-kelas" value="VII – A"></div>
-      <div><label>Wali Murid</label><input id="in-wali" value="Budi Santoso"></div>
+      <div><label>Nama Siswa</label><input id="in-nama" value="" placeholder="Nama siswa"></div>
+      <div>
+        <label>Kelas</label>
+        <select id="in-kelas-select"></select>
+        <input id="in-kelas-new" placeholder="Nama kelas baru, lalu Enter" style="display:none;margin-top:4px;">
+        <input type="hidden" id="in-kelas" value="Al Haytham">
+      </div>
     </div>
     <div id="papersize-note" style="display:none;font-size:10.5px;color:var(--muted);margin:-6px 0 10px;">
       Dicetak landscape (mendatar) &ndash; A5 (hasil fisik 21&times;14,8 cm) atau A4 (29,7&times;21 cm).
     </div>
     <div class="row">
-      <div><label>No. Urut Kuitansi</label><input id="in-noUrut" value="123"></div>
+      <input type="hidden" id="in-noUrut" value="123">
       <div><label>Tanggal</label><input id="in-tanggal" value="22 Juli 2026"></div>
       <div><label>Status</label><select id="in-status"><option value="LUNAS" selected>LUNAS</option><option value="BELUM LUNAS">BELUM LUNAS</option></select></div>
     </div>
@@ -563,18 +621,51 @@
     </div>
 
     <table id="in-items-table">
-      <thead><tr><th style="width:36%">Keterangan</th><th style="width:20%">Periode</th><th style="width:22%">Jumlah (Rp)</th><th style="width:6%"></th></tr></thead>
+      <thead><tr><th style="width:56%">Keterangan</th><th style="width:22%">Jumlah (Rp)</th><th style="width:6%"></th></tr></thead>
       <tbody id="in-items-body"></tbody>
     </table>
     <button type="button" class="btn btn-secondary" id="btn-add-row">+ Tambah Baris</button>
 
     <div class="row" style="margin-top:10px;">
-      <div><label>Potongan / Beasiswa (Rp)</label><input id="in-potongan" value="0"></div>
+      <div>
+        <label>Potongan / Beasiswa</label>
+        <div style="display:flex;gap:6px;">
+          <input id="in-potongan" value="0" style="flex:1;">
+          <select id="in-potongan-mode" style="width:70px;flex:none;">
+            <option value="rp" selected>Rp</option>
+            <option value="pct">%</option>
+          </select>
+        </div>
+      </div>
     </div>
 
     <div style="margin-top:10px;">
       <button type="button" class="btn btn-primary" id="btn-generate">Generate Bukti Pembayaran</button>
       <button type="button" class="btn btn-secondary" id="btn-print">Cetak / Simpan PDF</button>
+      <button type="button" class="btn btn-secondary" id="btn-riwayat">Riwayat</button>
+      <button type="button" class="btn btn-danger" id="btn-logout" style="float:right;">Logout</button>
+    </div>
+  </div>
+
+  <div id="riwayat-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9998;align-items:center;justify-content:center;">
+    <div style="background:#fff;border-radius:8px;padding:20px 24px;width:90%;max-width:720px;max-height:80vh;overflow:auto;font-family:Arial,sans-serif;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+        <div style="font-size:15px;font-weight:700;color:#003d40;">Riwayat Bukti Pembayaran</div>
+        <button type="button" id="riwayat-close" style="border:none;background:none;font-size:20px;cursor:pointer;color:#6b7280;">&times;</button>
+      </div>
+      <table style="width:100%;border-collapse:collapse;font-size:12.5px;">
+        <thead>
+          <tr style="background:#00595f;color:#fff;">
+            <th style="padding:6px 8px;text-align:left;">Tanggal Cetak</th>
+            <th style="padding:6px 8px;text-align:left;">No. Kuitansi</th>
+            <th style="padding:6px 8px;text-align:left;">Nama Siswa</th>
+            <th style="padding:6px 8px;text-align:right;">Jumlah</th>
+            <th style="padding:6px 8px;"></th>
+          </tr>
+        </thead>
+        <tbody id="riwayat-body"></tbody>
+      </table>
+      <div id="riwayat-empty" style="display:none;text-align:center;color:#6b7280;padding:20px;">Belum ada riwayat.</div>
     </div>
   </div>
 
@@ -601,9 +692,9 @@
       </div>
 
       <div class="meta-row">
-        <div>No. Kuitansi&nbsp; <strong id="out-invno">INV/2026/07/00123</strong></div>
         <div>Tanggal&nbsp; <strong id="out-tanggal">22 Juli 2026</strong></div>
         <div class="badge" id="out-status">LUNAS</div>
+        <div style="display:none;">No. Kuitansi <strong id="out-invno">INV/2026/07/00123</strong></div>
       </div>
 
       <!-- STUDENT INFO -->
@@ -616,15 +707,11 @@
           <p>Kelas</p>
           <h3 id="out-kelas">VII &ndash; A</h3>
         </div>
-        <div class="info-col">
-          <p>Wali Murid</p>
-          <h3 id="out-wali">Budi Santoso</h3>
-        </div>
       </div>
 
       <!-- KALIMAT BAKU KUITANSI -->
       <div class="kuitansi-lines" id="kuitansi-lines-wrap" style="display:none;">
-        <div class="kuitansi-untuk"><span class="label">Untuk pembayaran</span> <span class="val">: <span id="out-untuk-nama">Ahmad Fauzan Ramadhan</span> (Kelas <span id="out-untuk-kelas">VII&ndash;A</span>)</span></div>
+        <div class="kuitansi-untuk" id="out-untuk-line"><span class="label">Untuk pembayaran</span> <span class="val">: <span id="out-untuk-nama">Ahmad Fauzan Ramadhan</span><span id="out-untuk-kelas-wrap"> (Kelas <span id="out-untuk-kelas">VII&ndash;A</span>)</span></span></div>
         <table class="kuitansi-items-table">
           <thead>
             <tr>
@@ -635,6 +722,8 @@
           </thead>
           <tbody id="out-rincian-kuitansi"></tbody>
           <tfoot>
+            <tr id="out-subtotal-row" style="display:none;"><td colspan="2">Subtotal</td><td class="kit-nominal" id="out-subtotal-kuitansi">Rp 0</td></tr>
+            <tr id="out-potongan-row" style="display:none;"><td colspan="2">Potongan / Beasiswa</td><td class="kit-nominal" id="out-potongan-kuitansi">-Rp 0</td></tr>
             <tr><td colspan="2">Jumlah</td><td class="kit-nominal" id="out-jumlah-kuitansi">Rp 650.000</td></tr>
           </tfoot>
         </table>
@@ -682,10 +771,10 @@
       <!-- FOOTER -->
       <div class="footer">
         <div class="verify">
-          <img class="qr" src="data:image/png;base64,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" alt="QR Verifikasi">
+          <img class="qr" id="out-qr" src="" alt="QR Verifikasi">
           <div class="verify-text">
             <b>Verifikasi Keaslian</b>
-            Pindai kode untuk memeriksa keabsahan dokumen pada sistem Al-Fakhir.
+            Pindai kode untuk menuju situs resmi sekolah dan memastikan dokumen ini diterbitkan oleh Al-Fakhir.
           </div>
         </div>
 
@@ -728,29 +817,114 @@
   function fmtRp(n){ return "Rp " + Math.round(n).toLocaleString("id-ID"); }
   function fmtNum(n){ return Math.round(n).toLocaleString("id-ID"); }
   function parseNum(s){ return parseInt(String(s).replace(/[^\d-]/g,""),10) || 0; }
+
+  function isMoneyField(el){ return el && (el.classList.contains("f-jumlah") || el.id === "in-potongan"); }
+  document.addEventListener("focusin", function(e){
+    if(isMoneyField(e.target)){ e.target.value = String(parseNum(e.target.value)); }
+  });
+  document.addEventListener("focusout", function(e){
+    if(isMoneyField(e.target)){ e.target.value = fmtNum(parseNum(e.target.value)); }
+  });
   function esc(s){
     var d=document.createElement("div"); d.textContent=s; return d.innerHTML;
   }
 
+  var DEFAULT_KELAS = {
+    SD: ["1A An Na'im","1B Al Ma'wa","1C Al Adn","1D Darussalam"],
+    SMP: ["Al Haytham","Al Khawarizmi","Ibnu Khaldun","Ibnu Rusyd","Ibnu Sina"]
+  };
+
+  function kelasKey(unit){ return "afKelasList_" + unit; }
+
+  function loadKelasList(unit){
+    try {
+      var l = JSON.parse(localStorage.getItem(kelasKey(unit)));
+      return (l && l.length) ? l : DEFAULT_KELAS[unit].slice();
+    } catch(e){ return DEFAULT_KELAS[unit].slice(); }
+  }
+  function saveKelasList(unit, list){ localStorage.setItem(kelasKey(unit), JSON.stringify(list)); }
+
+  function currentUnit(){ return document.getElementById("in-unit").value; }
+
+  function renderKelasSelect(selected){
+    var unit = currentUnit();
+    var list = loadKelasList(unit);
+    var sel = document.getElementById("in-kelas-select");
+    sel.innerHTML = "";
+    var noneOpt = document.createElement("option");
+    noneOpt.value = "__none__"; noneOpt.textContent = "Belum Ada Kelas (Siswa Baru)";
+    sel.appendChild(noneOpt);
+    list.forEach(function(k){
+      var opt = document.createElement("option");
+      opt.value = k; opt.textContent = k;
+      sel.appendChild(opt);
+    });
+    var addOpt = document.createElement("option");
+    addOpt.value = "__add__"; addOpt.textContent = "+ Tambah Kelas Baru";
+    sel.appendChild(addOpt);
+    if(selected && list.indexOf(selected) === -1){
+      list.push(selected); saveKelasList(unit, list);
+      var opt2 = document.createElement("option");
+      opt2.value = selected; opt2.textContent = selected;
+      sel.insertBefore(opt2, addOpt);
+    }
+    sel.value = selected ? (list.indexOf(selected) > -1 ? selected : selected) : "__none__";
+    document.getElementById("in-kelas").value = sel.value === "__none__" ? "" : sel.value;
+  }
+
+  function setKelasValue(v){
+    renderKelasSelect(v);
+  }
+
+  renderKelasSelect(document.getElementById("in-kelas").value);
+
+  document.getElementById("in-unit").addEventListener("change", function(){ renderKelasSelect(null); });
+
+  document.getElementById("in-kelas-select").addEventListener("change", function(){
+    var v = this.value;
+    var newInput = document.getElementById("in-kelas-new");
+    if(v === "__add__"){
+      newInput.style.display = "block";
+      newInput.value = "";
+      newInput.focus();
+    } else {
+      newInput.style.display = "none";
+      document.getElementById("in-kelas").value = v === "__none__" ? "" : v;
+    }
+  });
+
+  document.getElementById("in-kelas-new").addEventListener("keydown", function(e){
+    if(e.key === "Enter"){
+      e.preventDefault();
+      var v = this.value.trim();
+      if(v){
+        var unit = currentUnit();
+        var list = loadKelasList(unit);
+        if(list.indexOf(v) === -1){ list.push(v); saveKelasList(unit, list); }
+        this.style.display = "none";
+        renderKelasSelect(v);
+      }
+    }
+  });
+
   var itemsBody = document.getElementById("in-items-body");
 
-  function addRow(ket, periode, jumlah){
+  function addRow(ket, jumlah){
     var tr = document.createElement("tr");
     tr.innerHTML =
       '<td><input class="f-ket" value="'+(ket||"")+'"></td>'+
-      '<td><input class="f-periode" value="'+(periode||"")+'"></td>'+
       '<td><input class="f-jumlah" value="'+(jumlah||"0")+'"></td>'+
       '<td><button type="button" class="btn btn-danger" style="margin:0;padding:5px 10px;">&times;</button></td>';
     tr.querySelector("button").addEventListener("click", function(){ tr.remove(); });
     itemsBody.appendChild(tr);
   }
 
-  addRow("SPP (Sumbangan Pembinaan Pendidikan)", "Juli 2026", "350000");
-  addRow("Uang Masuk / Uang Pangkal", "–", "0");
-  addRow("Ekskul (Kegiatan Ekstrakurikuler)", "Juli 2026", "50000");
-  addRow("UKT (Uang Kegiatan Tahunan)", "2026/2027", "250000");
+  addRow("SPP (Sumbangan Pembinaan Pendidikan)", "0");
+  addRow("Uang Masuk / Uang Pangkal", "0");
+  addRow("Ekskul (Kegiatan Ekstrakurikuler)", "0");
+  addRow("UKT (Uang Kegiatan Tahunan)", "0");
 
-  document.getElementById("btn-add-row").addEventListener("click", function(){ addRow("", "", "0"); });
+  document.getElementById("btn-add-row").addEventListener("click", function(){ addRow("", "0"); });
 
   var bulanIndo = ["januari","februari","maret","april","mei","juni","juli","agustus","september","oktober","november","desember"];
   var bulanIndoCap = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
@@ -767,7 +941,7 @@
     var romawi = monthIdx >= 0 ? bulanRomawi[monthIdx] : bulanRomawi[new Date().getMonth()];
     var tahun = parts.length >= 1 ? parts[parts.length-1] : String(new Date().getFullYear());
     var urut = String(parseInt(document.getElementById("in-noUrut").value,10) || 0).padStart(4,"0");
-    return urut + "/INV/AF-" + unit + "/" + romawi + "/" + tahun;
+    return urut + "/KWT/AF-" + unit + "/" + romawi + "/" + tahun;
   }
 
   function rebuildUntuk(){
@@ -791,7 +965,10 @@
     var unit = document.getElementById("in-unit").value;
     var isKuitansi = true;
 
-    document.getElementById("out-doctitle").firstChild.textContent = isKuitansi ? "Kuitansi " : "Bukti Pembayaran ";
+    var qrUrl = "https://" + (unit === "SD" ? "sdialfakhir.sch.id" : "smpialfakhir.sch.id");
+    document.getElementById("out-qr").src = "https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=" + encodeURIComponent(qrUrl);
+
+    document.getElementById("out-doctitle").firstChild.textContent = "Bukti Pembayaran ";
     document.getElementById("out-doctitle-suffix").style.display = isKuitansi ? "none" : "";
     document.getElementById("tabel-rincian-wrap").style.display = isKuitansi ? "none" : "";
     document.getElementById("kuitansi-lines-wrap").style.display = isKuitansi ? "" : "none";
@@ -808,8 +985,6 @@
     document.getElementById("out-papersize-note").textContent =
       isKuitansi ? (papersize === "A5" ? " Dicetak pada kertas A5 landscape (21 × 14,8 cm)." : " Dicetak pada kertas A4 landscape (29,7 × 21 cm).") : "";
 
-    document.getElementById("out-school-name").textContent = unit === "SD" ? "SD Islam Modern Al Fakhir" : "SMP Islam Modern Al Fakhir";
-    document.getElementById("out-school-web").textContent = unit === "SD" ? "sdialfakhir.sch.id" : "smpialfakhir.sch.id";
     document.getElementById("out-rek-sd").classList.toggle("active", unit === "SD");
     document.getElementById("out-rek-smp").classList.toggle("active", unit === "SMP");
 
@@ -823,19 +998,19 @@
 
     var nama = document.getElementById("in-nama").value;
     var kelas = document.getElementById("in-kelas").value;
-    var wali = document.getElementById("in-wali").value;
     var untuk = document.getElementById("in-untuk").value;
 
     document.getElementById("out-nama").textContent = nama;
     document.getElementById("out-kelas").textContent = kelas;
-    document.getElementById("out-wali").textContent = wali;
     document.getElementById("out-invno").textContent = buildInvoiceNo(unit);
     document.getElementById("out-tanggal").textContent = document.getElementById("in-tanggal").value;
     document.getElementById("out-status").textContent = document.getElementById("in-status").value;
     document.getElementById("out-signdate").textContent = "Depok, " + document.getElementById("in-tanggal").value;
 
-    document.getElementById("out-untuk-nama").textContent = nama;
+    document.getElementById("out-untuk-nama").textContent = nama || "(Siswa Baru)";
     document.getElementById("out-untuk-kelas").textContent = kelas;
+    document.getElementById("out-untuk-kelas-wrap").style.display = kelas ? "" : "none";
+    document.getElementById("out-untuk-line").style.display = (nama || kelas) ? "" : "none";
 
     var rows = itemsBody.querySelectorAll("tr");
     var outBody = document.getElementById("out-items-body");
@@ -844,11 +1019,10 @@
     var rincianRows = [];
     rows.forEach(function(row, i){
       var ket = row.querySelector(".f-ket").value;
-      var periode = row.querySelector(".f-periode").value || "–";
       var jumlah = parseNum(row.querySelector(".f-jumlah").value);
       subtotal += jumlah;
       var tr = document.createElement("tr");
-      tr.innerHTML = "<td>"+(i+1)+"</td><td>"+esc(ket)+"</td><td>"+esc(periode)+"</td><td>"+fmtNum(jumlah)+"</td>";
+      tr.innerHTML = "<td>"+(i+1)+"</td><td>"+esc(ket)+"</td><td>"+fmtNum(jumlah)+"</td>";
       outBody.appendChild(tr);
       if(jumlah > 0){
         var namaSingkat = ket.split("(")[0].trim() || ket;
@@ -856,13 +1030,19 @@
       }
     });
 
-    var potongan = parseNum(document.getElementById("in-potongan").value);
+    var potonganRaw = parseNum(document.getElementById("in-potongan").value);
+    var potonganMode = document.getElementById("in-potongan-mode").value;
+    var potongan = potonganMode === "pct" ? Math.round(subtotal * potonganRaw / 100) : potonganRaw;
     var grand = subtotal - potongan;
 
     document.getElementById("out-subtotal").textContent = fmtRp(subtotal);
     document.getElementById("out-potongan").textContent = fmtRp(potongan);
     document.getElementById("out-grand").textContent = fmtRp(grand);
     document.getElementById("out-jumlah-kuitansi").textContent = fmtRp(grand);
+    document.getElementById("out-subtotal-row").style.display = potongan > 0 ? "" : "none";
+    document.getElementById("out-potongan-row").style.display = potongan > 0 ? "" : "none";
+    document.getElementById("out-subtotal-kuitansi").textContent = fmtRp(subtotal);
+    document.getElementById("out-potongan-kuitansi").textContent = "-" + fmtRp(potongan);
     document.getElementById("out-rincian-kuitansi").innerHTML = rincianRows.join("");
     document.getElementById("out-terbilang").textContent = terbilang(grand) + " Rupiah";
   }
@@ -870,8 +1050,108 @@
   document.getElementById("btn-generate").addEventListener("click", generate);
   document.getElementById("btn-print").addEventListener("click", function(){
     generate();
+    saveHistory();
     localStorage.setItem("afInvoiceNoUrut", String((parseInt(document.getElementById("in-noUrut").value,10)||0) + 1));
     window.print();
+  });
+
+  var HISTORY_KEY = "afKuitansiHistory";
+
+  function captureState(){
+    var rows = Array.prototype.slice.call(itemsBody.querySelectorAll("tr")).map(function(row){
+      return { ket: row.querySelector(".f-ket").value, jumlah: row.querySelector(".f-jumlah").value };
+    });
+    var checks = Array.prototype.slice.call(document.querySelectorAll(".untuk-chk")).map(function(c){ return c.checked; });
+    return {
+      papersize: document.getElementById("in-papersize").value,
+      unit: document.getElementById("in-unit").value,
+      nama: document.getElementById("in-nama").value,
+      kelas: document.getElementById("in-kelas").value,
+      noUrut: document.getElementById("in-noUrut").value,
+      tanggal: document.getElementById("in-tanggal").value,
+      status: document.getElementById("in-status").value,
+      potongan: document.getElementById("in-potongan").value,
+      potonganMode: document.getElementById("in-potongan-mode").value,
+      untuk: document.getElementById("in-untuk").value,
+      checks: checks,
+      rows: rows
+    };
+  }
+
+  function restoreState(s){
+    document.getElementById("in-papersize").value = s.papersize;
+    document.getElementById("in-unit").value = s.unit;
+    document.getElementById("in-nama").value = s.nama;
+    setKelasValue(s.kelas);
+    document.getElementById("in-noUrut").value = s.noUrut;
+    document.getElementById("in-tanggal").value = s.tanggal;
+    document.getElementById("in-status").value = s.status;
+    document.getElementById("in-potongan").value = s.potongan;
+    document.getElementById("in-potongan-mode").value = s.potonganMode || "rp";
+    document.getElementById("in-untuk").value = s.untuk;
+    var chkEls = document.querySelectorAll(".untuk-chk");
+    (s.checks||[]).forEach(function(v,i){ if(chkEls[i]) chkEls[i].checked = v; });
+    itemsBody.innerHTML = "";
+    (s.rows||[]).forEach(function(r){ addRow(r.ket, r.jumlah); });
+    generate();
+  }
+
+  function loadHistory(){
+    try { return JSON.parse(localStorage.getItem(HISTORY_KEY)) || []; } catch(e){ return []; }
+  }
+
+  function saveHistory(){
+    var list = loadHistory();
+    list.unshift({
+      ts: new Date().toISOString(),
+      noKwt: document.getElementById("out-invno").textContent,
+      nama: document.getElementById("in-nama").value,
+      jumlah: document.getElementById("out-jumlah-kuitansi").textContent,
+      state: captureState()
+    });
+    if(list.length > 100) list = list.slice(0,100);
+    localStorage.setItem(HISTORY_KEY, JSON.stringify(list));
+  }
+
+  function renderRiwayat(){
+    var list = loadHistory();
+    var body = document.getElementById("riwayat-body");
+    body.innerHTML = "";
+    document.getElementById("riwayat-empty").style.display = list.length ? "none" : "block";
+    list.forEach(function(item, i){
+      var d = new Date(item.ts);
+      var tgl = d.toLocaleDateString("id-ID") + " " + d.toLocaleTimeString("id-ID",{hour:"2-digit",minute:"2-digit"});
+      var tr = document.createElement("tr");
+      tr.style.borderBottom = "1px solid #eee";
+      tr.innerHTML =
+        "<td style=\"padding:6px 8px;\">"+esc(tgl)+"</td>"+
+        "<td style=\"padding:6px 8px;font-family:monospace;font-size:11px;\">"+esc(item.noKwt)+"</td>"+
+        "<td style=\"padding:6px 8px;\">"+esc(item.nama)+"</td>"+
+        "<td style=\"padding:6px 8px;text-align:right;\">"+esc(item.jumlah)+"</td>"+
+        "<td style=\"padding:6px 8px;white-space:nowrap;\">"+
+          "<button type=\"button\" class=\"btn btn-secondary riwayat-buka\" style=\"padding:4px 10px;margin:0 4px 0 0;\">Buka</button>"+
+          "<button type=\"button\" class=\"btn btn-danger riwayat-hapus\" style=\"padding:4px 10px;margin:0;\">Hapus</button>"+
+        "</td>";
+      tr.querySelector(".riwayat-buka").addEventListener("click", function(){
+        restoreState(item.state);
+        document.getElementById("riwayat-modal").style.display = "none";
+      });
+      tr.querySelector(".riwayat-hapus").addEventListener("click", function(){
+        var l = loadHistory();
+        l.splice(i,1);
+        localStorage.setItem(HISTORY_KEY, JSON.stringify(l));
+        renderRiwayat();
+      });
+      body.appendChild(tr);
+    });
+  }
+
+  document.getElementById("btn-riwayat").addEventListener("click", function(){
+    renderRiwayat();
+    document.getElementById("riwayat-modal").style.display = "flex";
+  });
+  document.getElementById("riwayat-close").addEventListener("click", function(){
+    document.getElementById("riwayat-modal").style.display = "none";
   });
 
   // auto-isi tanggal hari ini & no urut lanjutan, tetap bisa diedit manual
@@ -879,6 +1159,22 @@
   document.getElementById("in-tanggal").value = today.getDate() + " " + bulanIndoCap[today.getMonth()] + " " + today.getFullYear();
   document.getElementById("in-noUrut").value = localStorage.getItem("afInvoiceNoUrut") || "1";
   rebuildUntuk();
+
+  // autosave draft supaya data gak hilang kalau refresh/nutup tab gak sengaja
+  var DRAFT_KEY = "afDraftState";
+  var draftTimer = null;
+  function saveDraft(){
+    clearTimeout(draftTimer);
+    draftTimer = setTimeout(function(){
+      try { localStorage.setItem(DRAFT_KEY, JSON.stringify(captureState())); } catch(e){}
+    }, 300);
+  }
+  document.querySelector(".toolbar").addEventListener("input", saveDraft);
+  document.querySelector(".toolbar").addEventListener("change", saveDraft);
+
+  var draft = null;
+  try { draft = JSON.parse(localStorage.getItem(DRAFT_KEY)); } catch(e){}
+  if(draft){ restoreState(draft); }
 
   generate();
 })();
