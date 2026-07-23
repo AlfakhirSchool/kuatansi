@@ -86,6 +86,14 @@
   .sheet.a5 .seal-logo, .sheet.a4l .seal-logo{ width:40px; height:40px; bottom:0; }
   .sheet.a5 .footnote, .sheet.a4l .footnote{ margin-top:8px; }
 
+  /* A4 landscape has extra room - loosen spacing at tight spots, borrow from looser ones */
+  .sheet.a4l .kuitansi-untuk{ margin-bottom:10px; }
+  .sheet.a4l .terbilang{ margin-top:10px; padding-top:8px; }
+  .sheet.a4l .extra-wrap{ margin-top:5px; }
+  .sheet.a4l .catatan{ margin-top:4px; padding-top:3px; }
+  .sheet.a4l .footer{ margin-top:6px; }
+  .sheet.a4l .kuitansi-items-table tbody td{ padding:5px 10px; }
+
   /* A5 needs much more aggressive shrink (148mm height only) */
   .sheet.a5 .frame{ font-size:11px; }
   .sheet.a5 .logo-row img{ width:26px; height:26px; }
@@ -520,7 +528,6 @@
   <div class="toolbar">
     <h2>Input Data Bukti Pembayaran</h2>
     <div class="row">
-      <div><label>Bentuk Dokumen</label><select id="in-doctype"><option value="invoice" selected>Invoice (rincian)</option><option value="kuitansi">Kuitansi (simpel)</option></select></div>
       <div id="in-papersize-wrap" style="display:none;">
         <label>Ukuran Kertas</label>
         <select id="in-papersize">
@@ -534,10 +541,10 @@
       <div><label>Wali Murid</label><input id="in-wali" value="Budi Santoso"></div>
     </div>
     <div id="papersize-note" style="display:none;font-size:10.5px;color:var(--muted);margin:-6px 0 10px;">
-      Kuitansi dicetak landscape (mendatar) &ndash; A5 (hasil fisik 21&times;14,8 cm) atau A4 (29,7&times;21 cm). Invoice selalu A4 portrait.
+      Dicetak landscape (mendatar) &ndash; A5 (hasil fisik 21&times;14,8 cm) atau A4 (29,7&times;21 cm).
     </div>
     <div class="row">
-      <div><label>No. Urut Invoice</label><input id="in-noUrut" value="123"></div>
+      <div><label>No. Urut Kuitansi</label><input id="in-noUrut" value="123"></div>
       <div><label>Tanggal</label><input id="in-tanggal" value="22 Juli 2026"></div>
       <div><label>Status</label><select id="in-status"><option value="LUNAS" selected>LUNAS</option><option value="BELUM LUNAS">BELUM LUNAS</option></select></div>
     </div>
@@ -594,7 +601,7 @@
       </div>
 
       <div class="meta-row">
-        <div>No. Invoice&nbsp; <strong id="out-invno">INV/2026/07/00123</strong></div>
+        <div>No. Kuitansi&nbsp; <strong id="out-invno">INV/2026/07/00123</strong></div>
         <div>Tanggal&nbsp; <strong id="out-tanggal">22 Juli 2026</strong></div>
         <div class="badge" id="out-status">LUNAS</div>
       </div>
@@ -782,8 +789,7 @@
 
   function generate(){
     var unit = document.getElementById("in-unit").value;
-    var doctype = document.getElementById("in-doctype").value;
-    var isKuitansi = doctype === "kuitansi";
+    var isKuitansi = true;
 
     document.getElementById("out-doctitle").firstChild.textContent = isKuitansi ? "Kuitansi " : "Bukti Pembayaran ";
     document.getElementById("out-doctitle-suffix").style.display = isKuitansi ? "none" : "";
