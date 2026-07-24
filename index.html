@@ -679,7 +679,6 @@
         <thead>
           <tr style="background:#00595f;color:#fff;">
             <th style="padding:6px 8px;text-align:left;">Tanggal Cetak</th>
-            <th style="padding:6px 8px;text-align:left;">No. Kuitansi</th>
             <th style="padding:6px 8px;text-align:left;">Nama Siswa</th>
             <th style="padding:6px 8px;text-align:left;">Oleh</th>
             <th style="padding:6px 8px;text-align:right;">Jumlah</th>
@@ -862,10 +861,11 @@
   function kelasKey(unit){ return "afKelasList_" + unit; }
 
   function loadKelasList(unit){
+    var fallback = (DEFAULT_KELAS[unit] || []).slice();
     try {
       var l = JSON.parse(localStorage.getItem(kelasKey(unit)));
-      return (l && l.length) ? l : DEFAULT_KELAS[unit].slice();
-    } catch(e){ return DEFAULT_KELAS[unit].slice(); }
+      return (l && l.length) ? l : fallback;
+    } catch(e){ return fallback; }
   }
   function saveKelasList(unit, list){ localStorage.setItem(kelasKey(unit), JSON.stringify(list)); }
 
@@ -1157,7 +1157,6 @@
       tr.style.borderBottom = "1px solid #eee";
       tr.innerHTML =
         "<td style=\"padding:6px 8px;\">"+esc(tgl)+"</td>"+
-        "<td style=\"padding:6px 8px;font-family:monospace;font-size:11px;\">"+esc(item.noKwt)+"</td>"+
         "<td style=\"padding:6px 8px;\">"+esc(item.nama)+"</td>"+
         "<td style=\"padding:6px 8px;\">"+esc(item.oleh||"-")+"</td>"+
         "<td style=\"padding:6px 8px;text-align:right;\">"+esc(item.jumlah)+"</td>"+
