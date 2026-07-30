@@ -391,7 +391,11 @@
 
   var draft = null;
   try { draft = JSON.parse(localStorage.getItem(DRAFT_KEY)); } catch(e){}
-  if(draft){ restoreState(draft); }
+  if(draft){
+    var todayStr = document.getElementById("in-tanggal").value;
+    restoreState(draft);
+    if(draft.tanggal !== todayStr){ document.getElementById("in-tanggal").value = todayStr; }
+  }
 
   generate();
 })();
