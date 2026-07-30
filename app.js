@@ -256,6 +256,7 @@
     document.getElementById("out-potongan-kuitansi").textContent = "-" + fmtRp(potongan);
     document.getElementById("out-rincian-kuitansi").innerHTML = rincianRows.join("");
     document.getElementById("out-terbilang").textContent = terbilang(grand) + " Rupiah";
+    fitSheet();
   }
 
   document.getElementById("btn-generate").addEventListener("click", generate);
@@ -398,4 +399,20 @@
   }
 
   generate();
+
+  // auto-scale preview sheet biar pas di layar hp/tablet
+  function fitSheet(){
+    var wrap = document.querySelector(".sheet-scroll");
+    var sheet = document.querySelector(".sheet");
+    if(!wrap || !sheet) return;
+    sheet.style.transform = "";
+    var natural = sheet.getBoundingClientRect().width;
+    var avail = wrap.clientWidth;
+    var scale = avail < natural ? avail / natural : 1;
+    sheet.style.transform = scale < 1 ? "scale(" + scale + ")" : "";
+    wrap.style.height = scale < 1 ? (sheet.getBoundingClientRect().height * scale) + "px" : "";
+  }
+  window.addEventListener("resize", fitSheet);
+  window.addEventListener("load", fitSheet);
+  fitSheet();
 })();

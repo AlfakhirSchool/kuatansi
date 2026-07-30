@@ -507,6 +507,14 @@
   }
 
   /* TOOLBAR (form input, not printed) */
+  .sheet-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+  .sheet{transform-origin:top left;}
+  @media (max-width:820px){
+    body{font-size:14px;}
+    .toolbar{max-width:100%;margin:8px;padding:12px;}
+    .toolbar .row > div{min-width:120px;}
+    .toolbar input, .toolbar select{font-size:16px;}
+  }
   .toolbar{
     max-width:210mm;margin:12px auto;background:#fff;border:1px solid var(--hairline);
     border-radius:6px;padding:16px 20px;font-family:Arial,sans-serif;font-size:12.5px;
@@ -529,4 +537,4 @@
   .btn-primary{background:var(--teal);color:#fff;}
   .btn-secondary{background:var(--gold-tint);color:var(--teal-deep);}
   .btn-danger{background:var(--orange-tint);color:var(--orange);}
-  @media print{.toolbar{display:none;} #login-gate{display:none!important;} #riwayat-modal{display:none!important;}}
+  @media print{.toolbar{display:none;} #login-gate{display:none!important;} #riwayat-modal{display:none!important;} .sheet{transform:none!important;} .sheet-scroll{height:auto!important;overflow:visible!important;}}
