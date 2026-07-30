@@ -126,7 +126,7 @@
   .sheet.a5 .sign-date{ font-size:8px; }
   .sheet.a5 .sign-name{ font-size:9px; padding-top:2px; }
   .sheet.a5 .sign-role{ font-size:7px; }
-  .sheet.a5 .footnote{ font-size:6.5px; margin-top:1px; }
+  .sheet.a5 .footnote{ font-size:6.5px; margin-top:5px; }
   .frame::before{
     content:"";
     position:absolute;
